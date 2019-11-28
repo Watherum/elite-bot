@@ -1,0 +1,26 @@
+{
+  "name": "watherum-elite-chatbot",
+  "version": "0.0.1",
+  "description": "A custom chatbot to handle Watherum's use cases",
+  "main": "wathelitebot.js",
+  "scripts": {
+    "start": "node wathelitebot.js"
+  },
+  "dependencies": {
+    "custom-env": "^1.0.2",
+    "express": "^4.16.4",
+    "tmi.js": "^1.2.1"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "repository": {
+    "url": "https://glitch.com/edit/#!/twitch-chatbot"
+  },
+  "license": "MIT",
+  "keywords": [
+    "twitch",
+    "chatbots",
+    "irc"
+  ]
+}
