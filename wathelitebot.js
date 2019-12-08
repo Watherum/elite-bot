@@ -16,6 +16,11 @@ const opts = {
   ]
 };
 
+//Used for The set functions
+const setModule = require('./set');
+let set = setModule.createSet();
+// console.log(set); //useful for debugging
+
 // Create a client with our options
 const client = new tmi.client(opts);
 
@@ -46,7 +51,7 @@ function onMessageHandler (target, context, msg, self) {
   //See their permissions for privileged commands
   let hasBadges = false;
   try {
-    console.log("Badges exist " + context.badges.moderator);
+    // console.log("Badges exist " + context.badges.moderator); //useful for debugging
     hasBadges = true;
   }
   catch (exception) {
@@ -75,6 +80,16 @@ function onMessageHandler (target, context, msg, self) {
   //Privileged Command Section
   if (  hasBadges && (context.badges.broadcaster === '1' || context.badges.moderator === '1') ) {
 
+    //30 Minute Warning Command. This command is privileged
+    if (commandInput.includes('!warning')) {
+      const splitInput = commandInput.split(" ");
+      if (splitInput[1] !== null) {
+        const chatResponse = timeWarning(splitInput[1]);
+        client.say(target, chatResponse);
+        console.log(`* Executed ${commandInput} command`);
+      }
+    }
+
     // edit arena command. This command is privileged
     if ( commandInput.includes('!editarena') ) {
       const splitInput = commandInput.split(" ");
@@ -85,14 +100,122 @@ function onMessageHandler (target, context, msg, self) {
       }
     }
 
-    //30 Minute Warning Command. This command is privileged
-    if (commandInput.includes('!warning')) {
+    //Initialize the entire set at once
+    if (commandInput.includes('!initSet')) { //!initSet 3,c1name,c2name
+      let chatResponse = "Malformed commamnd. Ex. !initSet bestofnumber,c1name,c2name";
       const splitInput = commandInput.split(" ");
       if (splitInput[1] !== null) {
-        const chatResponse = timeWarning(splitInput[1]);
+        let params = splitInput[1].split(",");
+        if (params[0] !== null && params[1] !== null && params[2] !== null) {
+          set.setUpBestOf(params[0]);
+          set.setCompOneUserName(params[1]);
+          set.setCompTwoUserName(params[2]);
+          chatResponse =  "This is a best of " + set.bestOf + ". Competitors need to get "+ set.winCondition +" wins. "
+              + set.compOneUserName + " & " + set.compTwoUserName + " good luck!";
+        }
         client.say(target, chatResponse);
         console.log(`* Executed ${commandInput} command`);
       }
+    }
+
+
+    //The following section relates to the sets
+    if (commandInput.includes('!setc1')) {
+      const splitInput = commandInput.split(" ");
+      if (splitInput[1] !== null) {
+        set.setCompOneUserName(splitInput[1]);
+        const chatResponse = "Set the first competitor as " + set.compOneUserName;
+        client.say(target, chatResponse);
+        console.log(`* Executed ${commandInput} command`);
+      }
+    }
+
+    //Sets the name of the second competitor
+    if (commandInput.includes('!setc2')) {
+      const splitInput = commandInput.split(" ");
+      if (splitInput[1] !== null) {
+        set.setCompTwoUserName(splitInput[1]);
+        const chatResponse = "Set the second competitor as " + set.compTwoUserName;
+        client.say(target, chatResponse);
+        console.log(`* Executed ${commandInput} command`);
+      }
+    }
+
+    //Set the best of limit and win conditions
+    if (commandInput.includes('!bestof')) {
+      const splitInput = commandInput.split(" ");
+      if (splitInput[1] !== null) {
+        set.setUpBestOf(splitInput[1]);
+        const chatResponse = "This is a best of " + set.bestOf +
+            ". Competitors need to get "+ set.winCondition +" wins. Good luck!";
+        client.say(target, chatResponse);
+
+        if (set.compOneUserName === "") {
+          client.say(target, "The first competitors name is not set");
+        }
+
+        if (set.compTwoUserName === "") {
+          client.say(target, "The second competitors name is not set");
+        }
+
+        console.log(`* Executed ${commandInput} command`);
+      }
+    }
+
+    //Manually cleared the set
+    if (commandInput.includes('!clearset')) {
+        hanldeSetCompletion();
+        const chatResponse = "The set has been cleared";
+        client.say(target, chatResponse);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    //Increment the first competitors wins
+    if (commandInput.includes('!c1w')) {
+      let setCompleted = set.incrementCompOneWins();
+      let chatResponse = set.compOneUserName + " now has " + set.compOneWins + " win(s)!";
+      if (setCompleted) {
+        chatResponse = "The set is over! The winner is " + set.winner + " !";
+        hanldeSetCompletion();
+      }
+      client.say(target, chatResponse);
+      console.log(`* Executed ${commandInput} command`);
+    }
+
+    //Increment the second competitors wins
+    if (commandInput.includes('!c2w')) {
+      let setCompleted = set.incrementCompTwoWins();
+      let chatResponse = set.compTwoUserName + " now has " + set.compTwoWins + " win(s)!";
+      if (setCompleted) {
+        chatResponse = "The set is over! The winner is " + set.winner + " !";
+        hanldeSetCompletion();
+      }
+      client.say(target, chatResponse);
+      console.log(`* Executed ${commandInput} command`);
+    }
+
+    //Decrement the first competitors wins
+    if (commandInput.includes('!c1l')) {
+      let setCompleted = set.decrementCompOneWins();
+      let chatResponse = set.compOneUserName + " now has " + set.compOneWins + " win(s).";
+      if (setCompleted) {
+        chatResponse = "The set is over! The winner is " + set.winner + " !";
+        hanldeSetCompletion();
+      }
+      client.say(target, chatResponse);
+      console.log(`* Executed ${commandInput} command`);
+    }
+
+    //Decrement the second competitors wins
+    if (commandInput.includes('!c2l')) {
+      let setCompleted = set.decrementCompTwoWins();
+      let chatResponse = set.compTwoUserName + " now has " + set.compTwoWins + " win(s).";
+      if (setCompleted) {
+        chatResponse = "The set is over! The winner is " + set.winner + "!";
+        hanldeSetCompletion();
+      }
+      client.say(target, chatResponse);
+      console.log(`* Executed ${commandInput} command`);
     }
 
   }
@@ -142,5 +265,11 @@ function timeWarning(minutes) {
   return "The stream will be ending in roughly " + minutes
       + " minutes from now. That is approximately " +
       formattedTime;
+}
+
+//Handles the clean up after a competitor wins the set
+function hanldeSetCompletion() {
+  set.logEntireSet(set);
+  set.clearSet();
 }
 
