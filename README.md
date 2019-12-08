@@ -1,3 +1,12 @@
+#Watherum Elite Chatbot
+##Purpose
+The purpose of this chat bot is to implement ideas of mine programmtically into my stream.
+It has the basic dice functions, but it also has the ability to track a competitive set and log it.
+It can also handle other custom commands for use in other games.
+Eventually, I want it to auto track information form the stream itself.
+Any other ideas that I have that can be done using this bot, I will be sure to program them in.
+
+
 # Twitch Getting Started with Chatbots & IRC
 =================
 
