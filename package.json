@@ -9,6 +9,10 @@
   "dependencies": {
     "custom-env": "^1.0.2",
     "express": "^4.16.4",
+    "jquery": "^3.4.1",
+    "request": "^2.88.0",
+    "streamlink": "^1.0.4",
+    "tesseract.js": "^2.0.0-beta.2",
     "tmi.js": "^1.2.1"
   },
   "engines": {

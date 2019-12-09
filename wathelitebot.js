@@ -3,7 +3,10 @@
  *
  */
 const tmi = require('tmi.js');
-require('custom-env').env();
+const env = require('custom-env').env();
+const setModule = require('./set');
+const textRecogModule = require('./text-recognition.js');
+
 
 // Define configuration options
 const opts = {
@@ -17,9 +20,14 @@ const opts = {
 };
 
 //Used for The set functions
-const setModule = require('./set');
 let set = setModule.createSet();
 // console.log(set); //useful for debugging
+
+//Used for text recognition
+let textRecog = textRecogModule.createTextRecognition();
+
+//Used for the !arena command
+let arena = "";
 
 // Create a client with our options
 const client = new tmi.client(opts);
@@ -77,6 +85,11 @@ function onMessageHandler (target, context, msg, self) {
     console.log(`* Executed ${commandInput} command`);
   }
 
+  if (commandInput === '!arena') {
+    client.say(target, `The arena id is ${arena}`);
+    console.log(`* Executed ${commandInput} command`);
+  }
+
   //Privileged Command Section
   if (  hasBadges && (context.badges.broadcaster === '1' || context.badges.moderator === '1') ) {
 
@@ -94,10 +107,18 @@ function onMessageHandler (target, context, msg, self) {
     if ( commandInput.includes('!editarena') ) {
       const splitInput = commandInput.split(" ");
       if (splitInput[1] !== null) {
-        const chatResponse = editArena(splitInput[1]);
+        editArena(splitInput[1]);
+        const chatResponse = "Arena updated!";
         client.say(target, chatResponse);
         console.log(`* Executed ${commandInput} command`);
       }
+    }
+
+    if (commandInput === '!test') {
+      textRecog.createStreamFile();
+      textRecog.parseTextFromStream();
+      client.say(target, `Executed the test`);
+      console.log(`* Executed ${commandInput} command`);
     }
 
     //Initialize the entire set at once
@@ -252,7 +273,9 @@ function rollDice6 () {
 
 //Function called when the editarena command is issued
 function editArena (arenaID) {
-  return "!editcommand !arena " + arenaID;
+  // return "!editcommand !arena " + arenaID;
+  // This is for updating the command in streamlabs cloudbot through chat. This is not ideal
+  arena = arenaID;
 }
 
 //Function called when the warning command is issued
