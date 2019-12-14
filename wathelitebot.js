@@ -56,10 +56,10 @@ function onMessageHandler (target, context, msg, self) {
   //Following Line is for debug purposes
   // console.log(context);
 
-  //See their permissions for privileged commands
+  // See their permissions for privileged commands
   let hasBadges = false;
   try {
-    // console.log("Badges exist " + context.badges.moderator); //useful for debugging
+    console.log("Badges exist " + context.badges.moderator); //useful for debugging
     hasBadges = true;
   }
   catch (exception) {
