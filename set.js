@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fileSystem = require('./file.js');
 
 compSet = function() {
     /**
@@ -11,6 +11,8 @@ compSet = function() {
     this.winCondition = 0;
     this.bestOf = 0;
     this.winner = "";
+
+    this.writer = fileSystem.createWriter();
 
 
     /**
@@ -32,8 +34,8 @@ compSet = function() {
 
         this.winCondition = calculateWinCondition(this.bestOf);
 
-        this.writeDataToFile('set/best_of.txt', this.bestOf);
-        this.writeDataToFile('set/win_condition.txt', this.winCondition);
+        this.writer.writeDataToFile('set/best_of.txt', this.bestOf);
+        this.writer.writeDataToFile('set/win_condition.txt', this.winCondition);
     };
 
     /**
@@ -42,7 +44,7 @@ compSet = function() {
      */
     this.setCompOneUserName = function (compOneUserName) {
         this.compOneUserName = compOneUserName;
-        this.writeDataToFile('set/competitor_one_user_name.txt', this.compOneUserName);
+        this.writer.writeDataToFile('set/competitor_one_user_name.txt', this.compOneUserName);
     };
 
     /**
@@ -51,7 +53,7 @@ compSet = function() {
      */
     this.setCompTwoUserName = function (compTwoUserName) {
         this.compTwoUserName = compTwoUserName;
-        this.writeDataToFile('set/competitor_two_user_name.txt', this.compTwoUserName);
+        this.writer.writeDataToFile('set/competitor_two_user_name.txt', this.compTwoUserName);
     };
 
     /**
@@ -75,7 +77,7 @@ compSet = function() {
         }
 
         if (setComplete) {
-            this.writeDataToFile('set/winner.txt', this.winner + " Won!");
+            this.writer.writeDataToFile('set/winner.txt', this.winner + " Won!");
         }
 
         return setComplete;
@@ -87,7 +89,7 @@ compSet = function() {
      */
     this.incrementCompOneWins = function () {
         this.compOneWins++;
-        this.writeDataToFile('set/competitor_one_wins.txt', this.compOneWins);
+        this.writer.writeDataToFile('set/competitor_one_wins.txt', this.compOneWins);
         return this.compareWinsToWinCondition();
     };
 
@@ -97,7 +99,7 @@ compSet = function() {
      */
     this.incrementCompTwoWins = function () {
         this.compTwoWins++;
-        this.writeDataToFile('set/competitor_two_wins.txt', this.compTwoWins);
+        this.writer.writeDataToFile('set/competitor_two_wins.txt', this.compTwoWins);
         return this.compareWinsToWinCondition();
     };
 
@@ -108,7 +110,7 @@ compSet = function() {
      */
     this.decrementCompOneWins = function () {
         this.compOneWins--;
-        this.writeDataToFile('set/competitor_one_wins.txt', this.compOneWins);
+        this.writer.writeDataToFile('set/competitor_one_wins.txt', this.compOneWins);
         return this.compareWinsToWinCondition();
     };
 
@@ -118,7 +120,7 @@ compSet = function() {
      */
     this.decrementCompTwoWins = function () {
         this.compTwoWins--;
-        this.writeDataToFile('set/competitor_two_wins.txt', this.compTwoWins);
+        this.writer.writeDataToFile('set/competitor_two_wins.txt', this.compTwoWins);
         return this.compareWinsToWinCondition();
     };
 
@@ -144,40 +146,11 @@ compSet = function() {
     /**
      * Creates and returns a json object of the set
      */
-    let getSetJson = function (set) {
+    this.getSetJson = function (set) {
         let response = JSON.stringify(set);
         response = response + "\r\n";
         return response;
 
-    };
-
-
-    /**
-     * The following section handles writing the data in the set to the text files
-     *
-     * These files will be used to get the data on stream. OBS can read text from files
-     */
-
-    this.writeDataToFile = function (fileName , data) {
-        fs.writeFile(fileName, data, (err) => {
-            // In case of a error throw err.
-            if (err) throw err;
-        })
-    };
-
-
-    this.appendDataToFile = function (fileName , data) {
-        fs.appendFile(fileName, data, (err) => {
-            // In case of a error throw err.
-            if (err) throw err;
-        })
-    };
-
-    /**
-     * Records the entire set to the set log.
-     */
-    this.logEntireSet = function (set) {
-        this.appendDataToFile('set/set_log.txt', getSetJson(set));
     };
 
     /**
@@ -194,13 +167,13 @@ compSet = function() {
         this.winner = "";
 
         //Reset logs
-        this.writeDataToFile('set/competitor_one_user_name.txt', this.compOneUserName);
-        this.writeDataToFile('set/competitor_two_user_name.txt', this.compTwoUserName);
-        this.writeDataToFile('set/competitor_one_wins.txt', this.compOneWins);
-        this.writeDataToFile('set/competitor_two_wins.txt', this.compTwoWins);
-        this.writeDataToFile('set/best_of.txt', this.bestOf);
-        this.writeDataToFile('set/win_condition.txt', this.winCondition);
-        this.writeDataToFile('set/winner.txt', this.winner);
+        this.writer.writeDataToFile('set/competitor_one_user_name.txt', this.compOneUserName);
+        this.writer.writeDataToFile('set/competitor_two_user_name.txt', this.compTwoUserName);
+        this.writer.writeDataToFile('set/competitor_one_wins.txt', this.compOneWins);
+        this.writer.writeDataToFile('set/competitor_two_wins.txt', this.compTwoWins);
+        this.writer.writeDataToFile('set/best_of.txt', this.bestOf);
+        this.writer.writeDataToFile('set/win_condition.txt', this.winCondition);
+        this.writer.writeDataToFile('set/winner.txt', this.winner);
     }
 
 };
