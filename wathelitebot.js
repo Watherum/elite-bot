@@ -118,7 +118,7 @@ function onMessageHandler(target, context, msg, self) {
                 streak.setVictor(splitInput[1]);
                 streak.incrementWins();
                 streak.incrementWins();
-                const chatResponse = streak.victor + " is now on a streak!";
+                const chatResponse = streak.victor.trim() + " is now on a streak!";
                 client.say(target, chatResponse);
                 console.log(`* Executed ${commandInput} command`);
             }
@@ -126,14 +126,14 @@ function onMessageHandler(target, context, msg, self) {
 
         if (commandInput.includes('!sw')) {
             streak.incrementWins();
-            const chatResponse = streak.victor + " streak has been updated!";
+            const chatResponse = streak.victor.trim() + "'s streak has been updated!";
             client.say(target, chatResponse);
             console.log(`* Executed ${commandInput} command`);
         }
 
         if (commandInput.includes('!sl')) {
             streak.decrementWins();
-            const chatResponse = streak.victor + " streak has been updated!";
+            const chatResponse = streak.victor.trim() + "'s streak has been updated!";
             client.say(target, chatResponse);
             console.log(`* Executed ${commandInput} command`);
         }
@@ -175,7 +175,7 @@ function onMessageHandler(target, context, msg, self) {
                     set.setCompOneUserName(params[1].trim());
                     set.setCompTwoUserName(params[2].trim());
                     chatResponse = "This is a best of " + set.bestOf + ". Competitors need to get " + set.winCondition + " wins. "
-                        + set.compOneUserName + " & " + set.compTwoUserName + " good luck!";
+                        + set.compOneUserName.trim() + " & " + set.compTwoUserName.trim() + " good luck!";
                 }
                 client.say(target, chatResponse);
                 console.log(`* Executed ${commandInput} command`);
@@ -188,7 +188,7 @@ function onMessageHandler(target, context, msg, self) {
             const splitInput = commandInput.split(" ");
             if (splitInput[1] !== null) {
                 set.setCompOneUserName(splitInput[1]);
-                const chatResponse = "Set the first competitor as " + set.compOneUserName;
+                const chatResponse = "Set the first competitor as " + set.compOneUserName.trim();
                 client.say(target, chatResponse);
                 console.log(`* Executed ${commandInput} command`);
             }
@@ -199,7 +199,7 @@ function onMessageHandler(target, context, msg, self) {
             const splitInput = commandInput.split(" ");
             if (splitInput[1] !== null) {
                 set.setCompTwoUserName(splitInput[1]);
-                const chatResponse = "Set the second competitor as " + set.compTwoUserName;
+                const chatResponse = "Set the second competitor as " + set.compTwoUserName.trim();
                 client.say(target, chatResponse);
                 console.log(`* Executed ${commandInput} command`);
             }
@@ -239,7 +239,7 @@ function onMessageHandler(target, context, msg, self) {
             let setCompleted = set.incrementCompOneWins();
             let chatResponse = set.compOneUserName + " now has " + set.compOneWins + " win(s)!";
             if (setCompleted) {
-                chatResponse = "The set is over! The winner is " + set.winner + " !";
+                chatResponse = "The set is over! The winner is " + set.winner.trim() + " !";
                 hanldeSetCompletion();
             }
             client.say(target, chatResponse);
@@ -251,7 +251,7 @@ function onMessageHandler(target, context, msg, self) {
             let setCompleted = set.incrementCompTwoWins();
             let chatResponse = set.compTwoUserName + " now has " + set.compTwoWins + " win(s)!";
             if (setCompleted) {
-                chatResponse = "The set is over! The winner is " + set.winner + " !";
+                chatResponse = "The set is over! The winner is " + set.winner.trim() + " !";
                 hanldeSetCompletion();
             }
             client.say(target, chatResponse);
