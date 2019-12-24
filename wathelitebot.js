@@ -112,10 +112,11 @@ function onMessageHandler(target, context, msg, self) {
         }
 
         //Streak commands
-        if (commandInput.includes('!initStreak')) {
+        if (commandInput.includes('!initstreak')) {
             const splitInput = commandInput.split(" ");
             if (splitInput[1] !== null) {
                 streak.setVictor(splitInput[1]);
+                streak.incrementWins();
                 streak.incrementWins();
                 const chatResponse = streak.victor + " is now on a streak!";
                 client.say(target, chatResponse);
@@ -137,7 +138,7 @@ function onMessageHandler(target, context, msg, self) {
             console.log(`* Executed ${commandInput} command`);
         }
 
-        if (commandInput.includes('!clearStreak')) {
+        if (commandInput.includes('!clearstreak')) {
             streak.resetStreak();
             const chatResponse = "The streak has been reset";
             client.say(target, chatResponse);
