@@ -28,6 +28,10 @@ streak = function() {
         this.writer.writeDataToFile('streak/wins.txt', this.consecutiveWins);
     };
 
+    this.setWins = function(numberOfWins) {
+        this.consecutiveWins = numberOfWins;
+    }
+
 };
 
 module.exports = {
