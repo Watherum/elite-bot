@@ -381,7 +381,7 @@ function twitchOnMessageHandler(target, context, msg, self) {
 
     if (commandInput === '!arena') {
         let chatResponse = 'The arena id is ' + arena;
-        if (isEmpty(arena)) {
+        if (isEmpty(arena) || arena === "nj") {
             chatResponse = 'The arena is not currently joinable'
         }
 
