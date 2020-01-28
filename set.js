@@ -167,13 +167,13 @@ compSet = function() {
         this.winner = "";
 
         //Reset logs
-        this.writer.writeDataToFile('set/competitor_one_user_name.txt', this.compOneUserName);
-        this.writer.writeDataToFile('set/competitor_two_user_name.txt', this.compTwoUserName);
-        this.writer.writeDataToFile('set/competitor_one_wins.txt', this.compOneWins);
-        this.writer.writeDataToFile('set/competitor_two_wins.txt', this.compTwoWins);
-        this.writer.writeDataToFile('set/best_of.txt', this.bestOf);
-        this.writer.writeDataToFile('set/win_condition.txt', this.winCondition);
-        this.writer.writeDataToFile('set/winner.txt', this.winner);
+        this.writer.writeDataToFile('set/competitor_one_user_name.txt', "");
+        this.writer.writeDataToFile('set/competitor_two_user_name.txt', "");
+        this.writer.writeDataToFile('set/competitor_one_wins.txt', "");
+        this.writer.writeDataToFile('set/competitor_two_wins.txt', "");
+        this.writer.writeDataToFile('set/best_of.txt', "");
+        this.writer.writeDataToFile('set/win_condition.txt', "");
+        this.writer.writeDataToFile('set/winner.txt', "");
     }
 
 };

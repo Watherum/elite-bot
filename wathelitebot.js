@@ -94,14 +94,14 @@ function discordOnMessageHandler(message) {
             'GENERAL COMMANDS \n' +
             '-----------------\n' +
             '!elitehelp | Return a list of commands. No arguments to this command\n' +
-            '!editarena | Sets the arena for people to join e.g.(!editarena ABCDE)\n' +
+            '!editarena | Sets the arena for people to join e.g.(!editarena ABCDE). the arugment nj will let people know they cant join\n' +
             '!warning | Sends a message detailing a time in minutes in the future when the stream ends ' +
             'e.g.(!warning 30)\n' +
             '!savestream | Saves a flv file of my stream to my computer locally. No arguments to this command \n\n' +
 
             'STREAK COMMANDS \n' +
             '----------------\n' +
-            '!initstreak | Writes a file used on stream. This should be used on the 2nd win e.g.(!initstreak Watherum)\n' +
+            '!initstreak | Writes a file used on stream. Sets the name and wins of the player e.g.(!initstreak Watherum,1)\n' +
             '!setstreakwins | Change the wins of the victor to a certain number e.g.(!setstreakwins 5)\n' +
             '!sw | Increment the wins of the victor. No arguments to this command\n' +
             '!sl | Decrement the wins of the victor. No arguments to this command\n' +
@@ -139,9 +139,9 @@ function discordOnMessageHandler(message) {
     if (commandInput.includes('!initstreak')) {
         const splitInput = commandInput.split(" ");
         if (splitInput[1] !== null) {
-            streak.setVictor(splitInput[1]);
-            streak.incrementWins();
-            streak.incrementWins();
+            const splitArgs = splitInput[1].split(",");
+            streak.setVictor(splitArgs[0]);
+            streak.setWins(splitArgs[1]);
             const chatResponse = streak.victor.trim() + " is now on a streak!";
             twitchClient.say(target, chatResponse);
             console.log(`* Executed ${commandInput} command`);
@@ -185,7 +185,11 @@ function discordOnMessageHandler(message) {
         const splitInput = commandInput.split(" ");
         if (splitInput[1] !== null) {
             editArena(splitInput[1]);
-            const chatResponse = "Arena ID updated! Use !arena to get the ID";
+            let chatResponse = "Arena ID updated! Use !arena to get the ID";
+            if (splitInput[1] === 'nj' || isEmpty(arena)) {
+                chatResponse = "The arena is currently not joinable";
+            }
+
             twitchClient.say(target, chatResponse);
             console.log(`* Executed ${commandInput} command`);
         }
@@ -376,7 +380,12 @@ function twitchOnMessageHandler(target, context, msg, self) {
     }
 
     if (commandInput === '!arena') {
-        twitchClient.say(target, `The arena id is ${arena}`);
+        let chatResponse = 'The arena id is ' + arena;
+        if (isEmpty(arena)) {
+            chatResponse = 'The arena is not currently joinable'
+        }
+
+        twitchClient.say(target, chatResponse);
         console.log(`* Executed ${commandInput} command`);
     }
 
@@ -439,5 +448,10 @@ function timeWarning(minutes) {
 function hanldeSetCompletion() {
     writer.logEntireSet(set);
     set.clearSet();
+}
+
+//Determine if a string is empty
+function isEmpty(str) {
+    return (!str || 0 === str.length);
 }
 

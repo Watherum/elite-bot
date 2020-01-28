@@ -25,11 +25,12 @@ streak = function() {
         this.victor = "";
         this.consecutiveWins = 0;
         this.writer.writeDataToFile('streak/victor.txt', this.victor);
-        this.writer.writeDataToFile('streak/wins.txt', this.consecutiveWins);
+        this.writer.writeDataToFile('streak/wins.txt', "");
     };
 
     this.setWins = function(numberOfWins) {
         this.consecutiveWins = numberOfWins;
+        this.writer.writeDataToFile('streak/wins.txt', this.consecutiveWins);
     }
 
 };
