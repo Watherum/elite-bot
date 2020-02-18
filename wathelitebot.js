@@ -36,6 +36,12 @@ let textRecog = textRecogModule.createTextRecognition();
 //Used for the !arena command
 let arena = "";
 
+let marioLevelList = [];
+let addMarioLevels = false;
+
+let singlesSmashList = [];
+let addSinglesPlayers = true;
+
 // Create a twitch client with our options
 const twitchClient = new tmi.client(opts);
 
@@ -90,23 +96,31 @@ function discordOnMessageHandler(message) {
 
 
     if (commandInput.includes('!elitehelp')) {
-        let help =
+
+        let generalCommands =
+            '-----------------\n' +
             'GENERAL COMMANDS \n' +
             '-----------------\n' +
             '!elitehelp | Return a list of commands. No arguments to this command\n' +
             '!editarena | Sets the arena for people to join e.g.(!editarena ABCDE). the arugment nj will let people know they cant join\n' +
             '!warning | Sends a message detailing a time in minutes in the future when the stream ends ' +
             'e.g.(!warning 30)\n' +
-            '!savestream | Saves a flv file of my stream to my computer locally. No arguments to this command \n\n' +
+            '!savestream | Saves a flv file of my stream to my computer locally. No arguments to this command \n\n'
+        ;
 
+        let streakCommands =
+            '----------------\n' +
             'STREAK COMMANDS \n' +
             '----------------\n' +
             '!initstreak | Writes a file used on stream. Sets the name and wins of the player e.g.(!initstreak Watherum,1)\n' +
             '!setstreakwins | Change the wins of the victor to a certain number e.g.(!setstreakwins 5)\n' +
             '!sw | Increment the wins of the victor. No arguments to this command\n' +
             '!sl | Decrement the wins of the victor. No arguments to this command\n' +
-            '!clearstreak | clears the streak and the files on stream. No arguments to this command\n\n' +
+            '!clearstreak | clears the streak and the files on stream. No arguments to this command\n\n'
+        ;
 
+        let setCommands =
+            '-------------\n' +
             'SET COMMANDS \n' +
             '-------------\n' +
             '!initset | Initialize the set files e.g.(!initSet bestOfNumberOfMatches,c1name,c2name)\n' +
@@ -119,8 +133,32 @@ function discordOnMessageHandler(message) {
             '!setc2 | Sets the 2nd competitor. e.g.(!setc2 Amiibo)\n' +
             '!bestof | Sets the number of matches the competitors will play at max e.g.(!bestof 5)\n' +
             '!c1l | Decrements the wins of the 1st competitor. No arguments to this command\n' +
-            '!c2l | Decrements the wins of the 2nd competitor. No arguments to this command\n';
-        message.channel.send(help);
+            '!c2l | Decrements the wins of the 2nd competitor. No arguments to this command\n\n'
+        ;
+
+        let smashSinglesCommands =
+            '------------------------------\n' +
+            'SMASH BROS SINGLES COMMANDS \n' +
+            '------------------------------\n' +
+            '!singlespop | Removes the top person in the list, they are the ones who play next \n' +
+            '!opensingles | Opens the queue, allows people to enter the list \n' +
+            '!closesingles | Closes the list, no one else can join after this point \n\n'
+        ;
+
+        let marioLevelCommands =
+            '----------------------\n' +
+            'MARIO LEVEL COMMANDS \n' +
+            '----------------------\n' +
+            '!levelpop | Removes the top level id from the list, this one is played next \n' +
+            '!openlevels | Opens the queue, and allows people to add ids to the list \n' +
+            '!closelevels | Closes the queue, no one else can enter levels after this point \n'
+        ;
+
+        message.channel.send(generalCommands);
+        message.channel.send(streakCommands);
+        message.channel.send(setCommands);
+        message.channel.send(smashSinglesCommands);
+        message.channel.send(marioLevelCommands);
     }
 
 
@@ -326,6 +364,50 @@ function discordOnMessageHandler(message) {
         twitchClient.say(target, chatResponse);
         console.log(`* Executed ${commandInput} command`);
     }
+
+    if (commandInput.includes('!singlespop')) {
+        let nextPlayer = singlesSmashList.pop();
+        let response = nextPlayer + ' is now up!';
+        message.channel.send(response);
+        twitchClient.say(target, response);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput.includes('!opensingles')) {
+        addSinglesPlayers = true;
+        let response = 'Singles queue is now open!';
+        twitchClient.say(target, response);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput.includes('!closesingles')) {
+        addSinglesPlayers = false;
+        let response = 'Singles queue is now closed';
+        twitchClient.say(target, response);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput.includes('!levelpop')) {
+        let nextLevelID = marioLevelList.pop();
+        let response = nextLevelID + ' is next!';
+        message.channel.send(response);
+        twitchClient.say(target, response);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput.includes('!openlevels')) {
+        addMarioLevels = true;
+        let response = 'Level queue is now open!';
+        twitchClient.say(target, response);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput.includes('!closelevels')) {
+        addMarioLevels = false;
+        let response = 'Level queue is now closed';
+        twitchClient.say(target, response);
+        console.log(`* Executed ${commandInput} command`);
+    }
 }
 
 
@@ -353,7 +435,15 @@ function twitchOnMessageHandler(target, context, msg, self) {
     //20 sided dice command
     if (commandInput === '!help') {
         let help = 'Commands are : \n' +
-        '!d20 \n' + '!d6 \n' + '!judge \n' + '!arena \n';
+            '!d20 | roll a 20 sided die\n' +
+            '!d6 | roll a 6 sided die\n' +
+            '!judge | Perfrom Game & Watches side b\n' +
+            '!arena | Get the ArenaID\n' +
+            '!join | Join the singles set queue\n' +
+            '!singlesqueue | See the status of the singles set queue\n' +
+            '!add | add a level to the Mario Maker level list \n' +
+            'levelqueue | see the status of the Mario Maker level queue\n'
+        ;
         twitchClient.say(target, help);
         console.log(`* Executed ${commandInput} command`);
     }
@@ -385,6 +475,48 @@ function twitchOnMessageHandler(target, context, msg, self) {
             chatResponse = 'The arena is not currently joinable'
         }
 
+        twitchClient.say(target, chatResponse);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput.includes('!join')) {
+        let chatResponse = 'Ive added you to the queue!';
+        const splitInput = commandInput.split(" ");
+
+        if (addSinglesPlayers) {
+            singlesSmashList.push(splitInput[1]);
+        }
+        else {
+            chatResponse = 'The queue is currently closed. Please enjoy the stream!';
+        }
+
+        twitchClient.say(target, chatResponse);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput.includes('!singlesqueue')) {
+        let chatResponse = 'There are ' + singlesSmashList.length + ' people in the queue';
+        twitchClient.say(target, chatResponse);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput.includes( '!add')) {
+        let chatResponse = 'Ive added your level to the queue!';
+        const splitInput = commandInput.split(" ");
+
+        if (addMarioLevels) {
+            addMarioLevels.push(splitInput[1]);
+        }
+        else {
+            chatResponse = 'The queue is currently closed. Please enjoy the stream!';
+        }
+
+        twitchClient.say(target, chatResponse);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput.includes('!levelqueue')) {
+        let chatResponse = 'There are ' + marioLevelList.length + ' people in the queue';
         twitchClient.say(target, chatResponse);
         console.log(`* Executed ${commandInput} command`);
     }
