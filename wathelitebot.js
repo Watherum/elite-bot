@@ -142,7 +142,8 @@ function discordOnMessageHandler(message) {
             '------------------------------\n' +
             '!singlespop | Removes the top person in the list, they are the ones who play next \n' +
             '!opensingles | Opens the queue, allows people to enter the list \n' +
-            '!closesingles | Closes the list, no one else can join after this point \n\n'
+            '!closesingles | Closes the list, no one else can join after this point \n' +
+            '!singlespopWath | Pops a person from the queue and creates a new set e.g.(!singlespopWath 5)\n'
         ;
 
         let marioLevelCommands =
@@ -365,9 +366,23 @@ function discordOnMessageHandler(message) {
         console.log(`* Executed ${commandInput} command`);
     }
 
-    if (commandInput.includes('!singlespop')) {
+    if (commandInput === '!singlespop') {
         let nextPlayer = singlesSmashList.pop();
         let response = nextPlayer + ' is now up!';
+        message.channel.send(response);
+        twitchClient.say(target, response);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput.includes('!singlespopWath')) {
+        let nextPlayer = singlesSmashList.pop();
+        let response = nextPlayer + ' is now up!';
+
+        let splitInput = commandInput.split(' ');
+        set.setUpBestOf(splitInput[1]);
+        set.setCompOneUserName('Watherum');
+        set.setCompTwoUserName(nextPlayer);
+
         message.channel.send(response);
         twitchClient.say(target, response);
         console.log(`* Executed ${commandInput} command`);
@@ -480,9 +495,9 @@ function twitchOnMessageHandler(target, context, msg, self) {
     }
 
     if (commandInput.includes('!join')) {
-        let chatResponse = 'Ive added you to the queue!';
-        const splitInput = commandInput.split(" ");
 
+        const splitInput = commandInput.split(" ");
+        let chatResponse = 'Ive added you to the queue ' + splitInput[1] + '!';
         if (addSinglesPlayers) {
             singlesSmashList.push(splitInput[1]);
         }
