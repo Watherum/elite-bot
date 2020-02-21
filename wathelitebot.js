@@ -367,7 +367,7 @@ function discordOnMessageHandler(message) {
     }
 
     if (commandInput === '!singlespop') {
-        let nextPlayer = singlesSmashList.pop();
+        let nextPlayer = singlesSmashList.shift();
         let response = nextPlayer + ' is now up!';
         message.channel.send(response);
         twitchClient.say(target, response);
@@ -375,10 +375,11 @@ function discordOnMessageHandler(message) {
     }
 
     if (commandInput.includes('!singlespopWath')) {
-        let nextPlayer = singlesSmashList.pop();
+        let nextPlayer = singlesSmashList.shift();
         let response = nextPlayer + ' is now up!';
 
         let splitInput = commandInput.split(' ');
+        set.clearSet();
         set.setUpBestOf(splitInput[1]);
         set.setCompOneUserName('Watherum');
         set.setCompTwoUserName(nextPlayer);
@@ -403,7 +404,7 @@ function discordOnMessageHandler(message) {
     }
 
     if (commandInput.includes('!levelpop')) {
-        let nextLevelID = marioLevelList.pop();
+        let nextLevelID = marioLevelList.shift();
         let response = nextLevelID + ' is next!';
         message.channel.send(response);
         twitchClient.say(target, response);
@@ -494,15 +495,30 @@ function twitchOnMessageHandler(target, context, msg, self) {
         console.log(`* Executed ${commandInput} command`);
     }
 
-    if (commandInput.includes('!join')) {
+    if (commandInput === '!join') {
 
+        const userWhoIsJoining = context.username;
+        let chatResponse = 'Ive added you to the queue ' + userWhoIsJoining + '!';
+        if (addSinglesPlayers) {
+            singlesSmashList.push(userWhoIsJoining);
+        }
+        else {
+            chatResponse = 'The queue is currently closed. Please enjoy the stream!';
+        }
+
+        twitchClient.say(target, chatResponse);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput.includes( '!mjoin') ) {
         const splitInput = commandInput.split(" ");
-        let chatResponse = 'Ive added you to the queue ' + splitInput[1] + '!';
+
+        let chatResponse = 'Ive manually added ' + splitInput[1] + ' to the queue!';
         if (addSinglesPlayers) {
             singlesSmashList.push(splitInput[1]);
         }
         else {
-            chatResponse = 'The queue is currently closed. Please enjoy the stream!';
+            chatResponse = 'The queue is currently closed.';
         }
 
         twitchClient.say(target, chatResponse);
