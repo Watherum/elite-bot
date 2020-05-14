@@ -36,8 +36,11 @@ let textRecog = textRecogModule.createTextRecognition();
 //Used for the !arena command
 let arena = "";
 
+//used for the !join or !passcode commands
+let pass = "";
+
 let marioLevelList = [];
-let addMarioLevels = false;
+let addMarioLevels = true;
 
 let singlesSmashList = [];
 let addSinglesPlayers = true;
@@ -105,7 +108,8 @@ function discordOnMessageHandler(message) {
             '!editarena | Sets the arena for people to join e.g.(!editarena ABCDE). the arugment nj will let people know they cant join\n' +
             '!warning | Sends a message detailing a time in minutes in the future when the stream ends ' +
             'e.g.(!warning 30)\n' +
-            '!savestream | Saves a flv file of my stream to my computer locally. No arguments to this command \n\n'
+            '!savestream | Saves a flv file of my stream to my computer locally. No arguments to this command \n' +
+            '!editpass | sets the passcode / password for the arena or lobby\n\n'
         ;
 
         let streakCommands =
@@ -141,9 +145,13 @@ function discordOnMessageHandler(message) {
             'SMASH BROS SINGLES COMMANDS \n' +
             '------------------------------\n' +
             '!singlespop | Removes the top person in the list, they are the ones who play next \n' +
+            '!singlesremove | Same as the command above, but removes a person from the queue \n' +
             '!opensingles | Opens the queue, allows people to enter the list \n' +
             '!closesingles | Closes the list, no one else can join after this point \n' +
-            '!singlespopWath | Pops a person from the queue and creates a new set e.g.(!singlespopWath 5)\n'
+            '!singlespopWath | Pops a person from the queue and creates a new set e.g.(!singlespopWath 5)\n' +
+            '!singlesWathremove | Same as the command above, but removes a person from the queue\n' +
+            '!mjoin | manually add a user to the singles set queue (must be done in twitch chat)\n' +
+            '!showqeueue | prints the current order of people in the queue\n\n'
         ;
 
         let marioLevelCommands =
@@ -152,7 +160,7 @@ function discordOnMessageHandler(message) {
             '----------------------\n' +
             '!levelpop | Removes the top level id from the list, this one is played next \n' +
             '!openlevels | Opens the queue, and allows people to add ids to the list \n' +
-            '!closelevels | Closes the queue, no one else can enter levels after this point \n'
+            '!closelevels | Closes the queue, no one else can enter levels after this point \n\n'
         ;
 
         message.channel.send(generalCommands);
@@ -230,6 +238,20 @@ function discordOnMessageHandler(message) {
             }
 
             twitchClient.say(target, chatResponse);
+            console.log(`* Executed ${commandInput} command`);
+        }
+    }
+
+    if (commandInput.includes('!editpass')) {
+        const splitInput = commandInput.split(" ");
+        if (splitInput[1] !== null) {
+            editPass(splitInput[1]);
+            let chatResponse = "passcode updated! Use !passcode";
+            if (splitInput[1] === 'nj' || isEmpty(pass)) {
+                chatResponse = "The arena/lobby is currently not joinable";
+            }
+            // twitchClient.say(target, chatResponse);
+            message.channel.send(chatResponse);
             console.log(`* Executed ${commandInput} command`);
         }
     }
@@ -368,6 +390,7 @@ function discordOnMessageHandler(message) {
 
     if (commandInput === '!singlespop') {
         let nextPlayer = singlesSmashList.shift();
+        singlesSmashList.push(nextPlayer);
         let response = nextPlayer + ' is now up!';
         message.channel.send(response);
         twitchClient.say(target, response);
@@ -376,6 +399,7 @@ function discordOnMessageHandler(message) {
 
     if (commandInput.includes('!singlespopWath')) {
         let nextPlayer = singlesSmashList.shift();
+        singlesSmashList.push(nextPlayer);
         let response = nextPlayer + ' is now up!';
 
         let splitInput = commandInput.split(' ');
@@ -386,6 +410,62 @@ function discordOnMessageHandler(message) {
 
         message.channel.send(response);
         twitchClient.say(target, response);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput.includes('!showqueue')) {
+
+        let response = "";
+
+        for (competitor in singlesSmashList) {
+            response = response + singlesSmashList[competitor] + ", ";
+
+        }
+        message.channel.send(response);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput === '!singlesremove') {
+        //get current player name
+        //find and remove where it is in the array
+        removeCompetitorFromQueue(set.getC2Name());
+        let nextPlayer = singlesSmashList.shift();
+        singlesSmashList.push(nextPlayer);
+        let response = nextPlayer + ' is now up!';
+        message.channel.send(response);
+        twitchClient.say(target, response);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput.includes('!singlesWathremove')) {
+        //get current player name
+        //find and remove where it is in the array
+
+        removeCompetitorFromQueue(set.getC2Name());
+        let nextPlayer = singlesSmashList.shift();
+        singlesSmashList.push(nextPlayer);
+        let response = nextPlayer + ' is now up!';
+
+        let splitInput = commandInput.split(' ');
+        set.clearSet();
+        set.setUpBestOf(splitInput[1]);
+        set.setCompOneUserName('Watherum');
+        set.setCompTwoUserName(nextPlayer);
+
+        message.channel.send(response);
+        twitchClient.say(target, response);
+        console.log(`* Executed ${commandInput} command`);
+    }
+
+    if (commandInput.includes( '!mjoin') ) {
+        const splitInput = commandInput.split(" ");
+
+        let chatResponse = 'Ive manually added ' + splitInput[1] + ' to the queue!';
+        if (addSinglesPlayers) {
+            singlesSmashList.push(splitInput[1]);
+        }
+
+        twitchClient.say(target, chatResponse);
         console.log(`* Executed ${commandInput} command`);
     }
 
@@ -455,7 +535,7 @@ function twitchOnMessageHandler(target, context, msg, self) {
             '!d6 | roll a 6 sided die\n' +
             '!judge | Perfrom Game & Watches side b\n' +
             '!arena | Get the ArenaID\n' +
-            '!join | Join the singles set queue\n' +
+            '!join | Join the singles set queue, get the arenaID and passcode\n' +
             '!singlesqueue | See the status of the singles set queue\n' +
             '!add | add a level to the Mario Maker level list \n' +
             'levelqueue | see the status of the Mario Maker level queue\n'
@@ -498,27 +578,13 @@ function twitchOnMessageHandler(target, context, msg, self) {
     if (commandInput === '!join') {
 
         const userWhoIsJoining = context.username;
-        let chatResponse = 'Ive added you to the queue ' + userWhoIsJoining + '!';
+        let chatResponse = 'Ive added you to the queue ' + userWhoIsJoining + '! The arenaID is ' +
+        arena + ' and the passcode is ' + pass;
         if (addSinglesPlayers) {
             singlesSmashList.push(userWhoIsJoining);
         }
         else {
             chatResponse = 'The queue is currently closed. Please enjoy the stream!';
-        }
-
-        twitchClient.say(target, chatResponse);
-        console.log(`* Executed ${commandInput} command`);
-    }
-
-    if (commandInput.includes( '!mjoin') ) {
-        const splitInput = commandInput.split(" ");
-
-        let chatResponse = 'Ive manually added ' + splitInput[1] + ' to the queue!';
-        if (addSinglesPlayers) {
-            singlesSmashList.push(splitInput[1]);
-        }
-        else {
-            chatResponse = 'The queue is currently closed.';
         }
 
         twitchClient.say(target, chatResponse);
@@ -595,6 +661,10 @@ function editArena(arenaID) {
     arena = arenaID;
 }
 
+function editPass(passcode) {
+    pass = passcode;
+}
+
 //Function called when the warning command is issued
 function timeWarning(minutes) {
     let minsFromNow = new Date();
@@ -618,3 +688,10 @@ function isEmpty(str) {
     return (!str || 0 === str.length);
 }
 
+function removeCompetitorFromQueue(competitor) {
+    for (var i = 0; i < singlesSmashList.length; i++) {
+        if (singlesSmashList[i] === competitor) {
+            singlesSmashList.splice(i, 1);
+        }
+    }
+}

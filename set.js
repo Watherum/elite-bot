@@ -174,7 +174,15 @@ compSet = function() {
         this.writer.writeDataToFile('set/best_of.txt', "");
         this.writer.writeDataToFile('set/win_condition.txt', "");
         this.writer.writeDataToFile('set/winner.txt', "");
-    }
+    };
+
+    this.getC1Name = function () {
+        return this.compTwoUserName;
+    };
+
+    this.getC2Name = function () {
+        return this.compTwoUserName;
+    };
 
 };
 
