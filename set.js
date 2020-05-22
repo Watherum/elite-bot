@@ -11,6 +11,8 @@ compSet = function() {
     this.winCondition = 0;
     this.bestOf = 0;
     this.winner = "";
+    this.gameNumber = 0;
+    this.setComplete = false;
 
     this.writer = fileSystem.createWriter();
 
@@ -33,9 +35,15 @@ compSet = function() {
         }
 
         this.winCondition = calculateWinCondition(this.bestOf);
+        this.calculateGameNumber();
 
         this.writer.writeDataToFile('set/best_of.txt', this.bestOf);
         this.writer.writeDataToFile('set/win_condition.txt', this.winCondition);
+    };
+
+    this.calculateGameNumber = function () {
+        this.gameNumber = this.compOneWins + this.compTwoWins + 1;
+        this.writer.writeDataToFile('set/game_number.txt', this.gameNumber);
     };
 
     /**
@@ -62,25 +70,27 @@ compSet = function() {
      * @returns {boolean}
      */
     this.compareWinsToWinCondition = function () {
-        let setComplete = false;
         if (this.compOneWins >= this.winCondition ) {
             //ensure over clicks don't cause bad data
             this.compOneWins = this.winCondition;
             this.winner = this.compOneUserName;
-            setComplete = true;
+            this.setComplete = true;
         }
         else if (this.compTwoWins >= this.winCondition ) {
             //ensure over clicks don't cause bad data
             this.compTwoWins = this.winCondition;
             this.winner = this.compTwoUserName;
-            setComplete = true;
+            this.setComplete = true;
         }
 
-        if (setComplete) {
+        if (this.setComplete) {
             this.writer.writeDataToFile('set/winner.txt', this.winner + " Won!");
         }
+        else {
+            this.calculateGameNumber();
+        }
 
-        return setComplete;
+        return this.setComplete;
     };
 
     /**
@@ -124,8 +134,6 @@ compSet = function() {
         return this.compareWinsToWinCondition();
     };
 
-
-
     /**
      * Helper method to calculate how many wins are required to win the set
      * @param bestOf
@@ -140,7 +148,7 @@ compSet = function() {
      * @param num
      * @returns {number}
      */
-    function isOdd(num) { return num % 2;}
+    function isOdd(num) { return num % 2;};
 
 
     /**
@@ -156,7 +164,11 @@ compSet = function() {
     /**
      * Resets the set back to its default state
      */
-    this.clearSet = function () {
+    this.clearSet = function (set) {
+        if (set.setComplete) {
+            this.writer.logEntireSet(set);
+        }
+
         //Reset Values
         this.compOneUserName = "";
         this.compOneWins = 0;
@@ -165,6 +177,8 @@ compSet = function() {
         this.winCondition = 0;
         this.bestOf = 0;
         this.winner = "";
+        this.gameNumber = 0;
+        this.setComplete = false;
 
         //Reset logs
         this.writer.writeDataToFile('set/competitor_one_user_name.txt', "");
@@ -174,6 +188,7 @@ compSet = function() {
         this.writer.writeDataToFile('set/best_of.txt', "");
         this.writer.writeDataToFile('set/win_condition.txt', "");
         this.writer.writeDataToFile('set/winner.txt', "");
+        this.writer.writeDataToFile('set/game_number.txt', "");
     };
 
     this.getC1Name = function () {

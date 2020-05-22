@@ -336,7 +336,7 @@ function discordOnMessageHandler(message) {
     if (commandInput.includes('!clearset')) {
         hanldeSetCompletion();
         const chatResponse = "The set has been cleared";
-        twitchClient.say(target, chatResponse);
+        message.channel.send(chatResponse);
         console.log(`* Executed ${commandInput} command`);
     }
 
@@ -679,8 +679,7 @@ function timeWarning(minutes) {
 
 //Handles the clean up after a competitor wins the set
 function hanldeSetCompletion() {
-    writer.logEntireSet(set);
-    set.clearSet();
+    set.clearSet(set);
 }
 
 //Determine if a string is empty
