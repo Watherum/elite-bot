@@ -158,9 +158,9 @@ function twitchOnMessageHandler(target, context, msg, self) {
             let help = 'Commands are : \n' +
                 '!arena | Get the ArenaID\n' +
                 '!join | Join the singles set queue, get the arenaID and passcode\n' +
-                '!singlesqueue | See the status of the singles set queue\n' +
+                '!showqueue | See the status of the singles set queue\n' +
                 '!add | add a level to the Mario Maker level list \n' +
-                'levelqueue | see the status of the Mario Maker level queue\n'
+                '!levelqueue | see the status of the Mario Maker level queue\n'
             ;
             twitchClient.say(target, help);
             console.log(`* Executed ${commandInput} command`);
@@ -191,7 +191,7 @@ function twitchOnMessageHandler(target, context, msg, self) {
             console.log(`* Executed ${commandInput} command`);
         }
 
-        if (commandInput.includes('!singlesqueue')) {
+        if (commandInput.includes('!showqueue')) {
             let response = "";
             for (competitor in singlesSmashList) {
                 response = response + singlesSmashList[competitor] + ", ";
