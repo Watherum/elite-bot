@@ -1,2 +1,0 @@
-{"compOneUserName":"Wath","compOneWins":2,"compTwoUserName":"CPU","compTwoWins":1,"winCondition":2,"bestOf":"3","winner":"Wath","writer":{}}
-{"compOneUserName":"","compOneWins":0,"compTwoUserName":"","compTwoWins":0,"winCondition":0,"bestOf":0,"winner":"","writer":{}}
