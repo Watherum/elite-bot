@@ -68,20 +68,28 @@ textRecog = function () {
     this.parseTextFromStream = function () {
         const { createWorker } = Tesseract;
         this.createStreamFile();
-        let video = this.getStreamFile('./streams/.');
+        // let video = this.getStreamFile('./streams/.');
+        let video = 'https://tesseract.projectnaptha.com/img/eng_bw.png';
 
         const worker = createWorker({
             logger: m => console.log(m)
         });
 
-        (async () => {
-            await worker.load();
-            await worker.loadLanguage('eng');
-            await worker.initialize('eng');
-            const { data: { text } } = await worker.recognize(video);
-            console.log(text);
-            await worker.terminate();
-        })();
+        try {
+            (async () => {
+                await worker.load();
+                await worker.loadLanguage('eng');
+                await worker.initialize('eng');
+                const { data: { text } } = await worker.recognize(video);
+                console.log(text);
+                await worker.terminate();
+            })();
+        }
+        catch {
+
+        }
+        //D:\Local Disk C\Red Ops\Websites\elite-bot\streams\eng_bw.png
+
     };
 
 };
