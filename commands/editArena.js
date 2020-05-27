@@ -3,9 +3,9 @@ module.exports = {
     description: 'Edits the arena variable which chat uses to find the arena',
     execute(message,  twitchClient, target, set, streak, arena, pass, textRecog,
             singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args) {
-        arena = args[0];
+        arena.id = args[0];
         let chatResponse = "Arena ID updated! Use !arena to get the ID";
-        if (args[0] === 'nj' || isEmpty(arena)) {
+        if (args[0] === 'nj' || isEmpty(arena.id)) {
             chatResponse = "The arena is currently not joinable";
         }
         twitchClient.say(target, chatResponse);

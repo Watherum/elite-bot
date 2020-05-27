@@ -4,9 +4,9 @@ module.exports = {
     execute(message,  twitchClient, target, set, streak, arena, pass, textRecog,
             singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args) {
         if (args[0] !== null) {
-            pass = (args[0]);
+            pass.code = (args[0]);
             let chatResponse = "passcode updated! Use !passcode";
-            if (args[0] === 'nj' || isEmpty(pass)) {
+            if (args[0] === 'nj' || isEmpty(pass.code)) {
                 chatResponse = "The arena/lobby is currently not joinable";
             }
             twitchClient.say(target, chatResponse);

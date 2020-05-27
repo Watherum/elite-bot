@@ -32,10 +32,14 @@ let streak = streakModule.createStreak();
 let textRecog = textRecogModule.createTextRecognition();
 
 //Used for the !arena command
-let arena = "";
+let arena = {
+    id : ""
+};
 
 //used for the !join or !passcode commands
-let pass = "";
+let pass = {
+    code : ""
+};
 
 let marioLevelList = [];
 let addMarioLevels = true;
@@ -167,8 +171,8 @@ function twitchOnMessageHandler(target, context, msg, self) {
         }
 
         if (commandInput === '!arena') {
-            let chatResponse = 'The arena id is ' + arena;
-            if (isEmpty(arena) || arena === "nj") {
+            let chatResponse = 'The arena id is ' + arena.id;
+            if (isEmpty(arena.id) || arena.id === "nj") {
                 chatResponse = 'The arena is not currently joinable'
             }
 
@@ -180,7 +184,7 @@ function twitchOnMessageHandler(target, context, msg, self) {
 
             const userWhoIsJoining = context.username;
             let chatResponse = 'Ive added you to the queue ' + userWhoIsJoining + '! The arenaID is ' +
-                arena + ' and the passcode is ' + pass;
+                arena.id + ' and the passcode is ' + pass.code;
             if (addSinglesPlayers) {
                 singlesSmashList.push(userWhoIsJoining);
             } else {
