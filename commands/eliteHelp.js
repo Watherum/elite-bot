@@ -1,8 +1,10 @@
 module.exports = {
     name: 'elitehelp',
     description: 'Gives the Streamer and Mods useful info about other commands',
-    execute(message, twitchClient, target, set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args) {
+    execute(discordClient, message, twitchClient, target,
+            set, streak, arena, pass, count,
+            textRecog, singlesSmashList, addSinglesPlayers,
+            marioLevelList, addMarioLevels, args) {
         let generalCommands =
             '-----------------\n' +
             'GENERAL COMMANDS \n' +
@@ -12,6 +14,7 @@ module.exports = {
             '!warning | Sends a message detailing a time in minutes in the future when the stream ends ' +
             'e.g.(!warning 30)\n' +
             '!savestream | Saves a flv file of my stream to my computer locally. No arguments to this command \n' +
+            '!clearstreamingchannel | SHOULD remove all messages in the streaming channel. Use with EXTREME CAUTION!'
             '!editpass | sets the passcode / password for the arena or lobby\n\n'
         ;
 
@@ -22,6 +25,8 @@ module.exports = {
             '!initstreak | Writes a file used on stream. Sets the name and wins of the player e.g.(!initstreak Watherum,1)\n' +
             '!sw | Increment the wins of the victor. No arguments to this command\n' +
             '!sl | Decrement the wins of the victor. No arguments to this command\n' +
+            '!calckoth | Generates the leaderboard from the streak log and write it to discord' +
+            '!logstreak | logs the current streak to the streak log' +
             '!clearstreak | clears the streak and the files on stream. No arguments to this command\n\n'
         ;
 

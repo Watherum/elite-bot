@@ -1,8 +1,10 @@
 module.exports = {
     name: 'editpass',
     description: 'Edits the pass variable which chat uses to access the lobby',
-    execute(message, twitchClient, target, set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args) {
+    execute(discordClient, message, twitchClient, target,
+            set, streak, arena, pass, count,
+            textRecog, singlesSmashList, addSinglesPlayers,
+            marioLevelList, addMarioLevels, args) {
         if (args[0] !== null) {
             pass.code = (args[0]);
             let chatResponse = "passcode updated! Use !passcode";

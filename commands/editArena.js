@@ -1,8 +1,10 @@
 module.exports = {
     name: 'editarena',
     description: 'Edits the arena variable which chat uses to find the arena',
-    execute(message, twitchClient, target, set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args) {
+    execute(discordClient, message, twitchClient, target,
+            set, streak, arena, pass, count,
+            textRecog, singlesSmashList, addSinglesPlayers,
+            marioLevelList, addMarioLevels, args) {
         arena.id = args[0];
         let chatResponse = "Arena ID updated! Use !arena to get the ID";
         if (args[0] === 'nj' || isEmpty(arena.id)) {

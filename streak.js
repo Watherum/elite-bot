@@ -44,35 +44,54 @@ streak = function() {
     }
 
     this.logStreak = function(streak) {
-        console.log(this.isEmpty(streak.getVictor()));
-        console.log(streak.getConsecutiveWins());
         this.writer.appendDataToFile('streak/streak_log.txt', this.getStreakJson(streak));
-        this.writer.appendDataToFile('streak/streak_log.txt', ',');
     }
 
     this.calculateKingOfTheHill = function () {
+        //Get data from the streak_log.txt file
         let streakLogTxt = fs.readFileSync(path.resolve('streak','streak_log.txt'), 'utf8');
         const data = JSON.parse(this.cleanUpJson(streakLogTxt));
-        let maxStreakNumber = 0;
-        let maxStreakVictor = 0;
 
-        //TODO implement better handling for ties and multiway matches
+        let leaderboard = new SortableMap();
+        let response = [];
 
-        let objectKeysArray = Object.keys(data)
+        //Filter thru data and get the highest streak per competitor. Removes duplicates
+        let objectKeysArray = Object.keys(data);
         objectKeysArray.forEach(function(objKey) {
             let arenaStreak = data[objKey];
-            console.log(arenaStreak);
-            if (arenaStreak.consecutiveWins > maxStreakNumber) {
-                maxStreakNumber = arenaStreak.consecutiveWins;
-                maxStreakVictor = arenaStreak.victor;
+            // console.log(arenaStreak);
+
+            if (leaderboard.has(arenaStreak.victor)) {
+                if (arenaStreak.consecutiveWins > leaderboard.get(arenaStreak.victor)) {
+                    leaderboard.set( arenaStreak.victor, arenaStreak.consecutiveWins );
+                }
+            }
+            else {
+                leaderboard.set( arenaStreak.victor, arenaStreak.consecutiveWins );
             }
         });
-        return maxStreakVictor + ' is tonights Stream Champion with ' + maxStreakNumber + ' consecutive wins!';
+        //Remove placeholder that will always be in the logs
+        leaderboard.delete("No Current Victor")
+        //Sort data
+        leaderboard.sort( (a, b) => a[0] > b[0] );
+
+        //Update the repsonse to be user friendly
+        response.push("-----------------------------------------------")
+        for (const [key, value] of leaderboard.entries()) {
+            response.push(key + " had a max streak of " + value);
+        }
+        response.push("-----------------------------------------------")
+        response.push("|         Leaderbaord for " + this.getDate() + "         |")
+        response.push("-----------------------------------------------")
+        response.reverse();
+
+        return response;
     }
 
     this.getStreakJson = function (streak) {
         let response = JSON.stringify(streak);
         response = response + "\r\n";
+        response = response + ",";
         return response;
     };
 
@@ -96,7 +115,26 @@ streak = function() {
         return text;
     }
 
+    this.getDate = function() {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = mm + '/' + dd + '/' + yyyy;
+        return today
+    }
+
 };
+
+class SortableMap extends Map {
+    sort(cmp = (a, b) => a[0].localeCompare(b[0])) {
+        for (const [key, value] of [...this.entries()].sort(cmp)) {
+            this.delete(key);
+            this.set(key, value); // New keys are added at the end of the order
+        }
+    }
+}
 
 module.exports = {
     createStreak : function () {

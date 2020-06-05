@@ -28,6 +28,8 @@ let set = setModule.createSet();
 
 //used for the streak functions
 let streak = streakModule.createStreak();
+streak.setVictor("No Current Victor");
+streak.setWins(0);
 
 //Used for text recognition
 let textRecog = textRecogModule.createTextRecognition();
@@ -125,8 +127,10 @@ function discordOnMessageHandler(message) {
 
         try {
             console.log(args);
-            discordClient.commands.get(command).execute(message, twitchClient, target, set, streak, arena, pass, count,
-                textRecog, singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args);
+            discordClient.commands.get(command).execute(discordClient, message, twitchClient, target,
+                set, streak, arena, pass, count,
+                textRecog, singlesSmashList, addSinglesPlayers,
+                marioLevelList, addMarioLevels, args);
         } catch (error) {
             console.error(error);
             message.reply('There was an error trying to execute that command!');

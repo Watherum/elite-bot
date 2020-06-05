@@ -1,8 +1,10 @@
 module.exports = {
     name: 'sl',
     description: 'Updates the streak win count for the victor',
-    execute(message, twitchClient, target, set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args) {
+    execute(discordClient, message, twitchClient, target,
+            set, streak, arena, pass, count,
+            textRecog, singlesSmashList, addSinglesPlayers,
+            marioLevelList, addMarioLevels, args) {
         streak.decrementWins();
         const chatResponse = streak.victor.trim() + "'s streak has been updated!";
         // twitchClient.say(target, chatResponse);

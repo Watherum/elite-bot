@@ -157,8 +157,8 @@ compSet = function() {
     this.getSetJson = function (set) {
         let response = JSON.stringify(set);
         response = response + "\r\n";
+        response = response + ",";
         return response;
-
     };
 
     /**

@@ -1,8 +1,10 @@
 module.exports = {
     name: 'removecomp',
     description: 'Removes a competitor from the queue',
-    execute(message, twitchClient, target, set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args) {
+    execute(discordClient, message, twitchClient, target,
+            set, streak, arena, pass, count,
+            textRecog, singlesSmashList, addSinglesPlayers,
+            marioLevelList, addMarioLevels, args) {
         for (var i = 0; i < singlesSmashList.length; i++) {
             if (singlesSmashList[i] === args[0]) {
                 singlesSmashList.splice(i, 1);

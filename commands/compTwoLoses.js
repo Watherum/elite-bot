@@ -1,8 +1,10 @@
 module.exports = {
     name: 'c2l',
     description: 'Updates the win count for comp. 2 in the set',
-    execute(message, twitchClient, target, set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args) {
+    execute(discordClient, message, twitchClient, target,
+            set, streak, arena, pass, count,
+            textRecog, singlesSmashList, addSinglesPlayers,
+            marioLevelList, addMarioLevels, args) {
         let setCompleted = set.decrementCompTwoWins();
         let chatResponse = set.compTwoUserName + " now has " + set.compTwoWins + " win(s)!";
         if (setCompleted) {
