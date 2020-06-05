@@ -5,7 +5,7 @@ module.exports = {
             textRecog, singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args) {
         streak.decrementWins();
         const chatResponse = streak.victor.trim() + "'s streak has been updated!";
-        twitchClient.say(target, chatResponse);
+        // twitchClient.say(target, chatResponse);
         console.log(`* Executed sl command`);
     },
 };
