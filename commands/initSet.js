@@ -1,8 +1,8 @@
 module.exports = {
     name: 'initset',
     description: 'populates the data in the set for the competitors',
-    execute(message,  twitchClient, target, set, streak, arena, pass, textRecog,
-            singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args) {
+    execute(message, twitchClient, target, set, streak, arena, pass, count,
+            textRecog, singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args) {
         let chatResponse = "Malformed commamnd. Ex. !initSet bestofnumber c1name c2name";
             if (args[0] !== null && args[1] !== null && args[2] !== null) {
                 set.setUpBestOf(args[0]);

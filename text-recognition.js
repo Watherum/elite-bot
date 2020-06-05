@@ -69,7 +69,8 @@ textRecog = function () {
         const { createWorker } = Tesseract;
         this.createStreamFile();
         // let video = this.getStreamFile('./streams/.');
-        let video = 'https://tesseract.projectnaptha.com/img/eng_bw.png';
+        // let video = 'https://tesseract.projectnaptha.com/img/eng_bw.png';
+        let video = ('./images/inverted.png');
 
         const worker = createWorker({
             logger: m => console.log(m)
@@ -88,7 +89,6 @@ textRecog = function () {
         catch {
 
         }
-        //D:\Local Disk C\Red Ops\Websites\elite-bot\streams\eng_bw.png
 
     };
 

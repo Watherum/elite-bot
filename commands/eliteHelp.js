@@ -1,8 +1,8 @@
 module.exports = {
     name: 'elitehelp',
     description: 'Gives the Streamer and Mods useful info about other commands',
-    execute(message,  twitchClient, target, set, streak, arena, pass, textRecog,
-            singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args) {
+    execute(message, twitchClient, target, set, streak, arena, pass, count,
+            textRecog, singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args) {
         let generalCommands =
             '-----------------\n' +
             'GENERAL COMMANDS \n' +
@@ -58,11 +58,23 @@ module.exports = {
             '!closelevels | Closes the queue, no one else can enter levels after this point \n\n'
         ;
 
+        let countCommands =
+            '-------------------\n' +
+            'COUNT COMMANDS \n' +
+            '-------------------\n' +
+            '!ic | Increments the number of the count \n' +
+            '!dc | Decrements the number of the count \n' +
+            '!ic | Increments the number of the count \n' +
+            '!resetcount | Reset the number and info of the count \n' +
+            '!setcount | Sets the number of the count \n' +
+            '!setinfo | Sets the info of the count \n\n';
+
         message.channel.send(generalCommands);
         message.channel.send(streakCommands);
         message.channel.send(setCommands);
         message.channel.send(smashSinglesCommands);
         message.channel.send(marioLevelCommands);
+        message.channel.send(countCommands);
 
         console.log('Executed elitehelp command');
     },

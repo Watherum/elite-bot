@@ -7,6 +7,7 @@ const tmi = require('tmi.js');
 const env = require('custom-env').env();
 const setModule = require('./set');
 const streakModule = require('./streak');
+const countModule = require('./count');
 const textRecogModule = require('./text-recognition.js');
 const Discord = require('discord.js');
 
@@ -30,6 +31,9 @@ let streak = streakModule.createStreak();
 
 //Used for text recognition
 let textRecog = textRecogModule.createTextRecognition();
+
+//Used for counting. Typically a death counter
+let count = countModule.createCount();
 
 //Used for the !arena command
 let arena = {
@@ -119,8 +123,8 @@ function discordOnMessageHandler(message) {
 
         try {
             console.log(args);
-            discordClient.commands.get(command).execute(message, twitchClient, target, set, streak, arena, pass, textRecog,
-                singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args);
+            discordClient.commands.get(command).execute(message, twitchClient, target, set, streak, arena, pass, count,
+                textRecog, singlesSmashList, addSinglesPlayers, marioLevelList, addMarioLevels, args);
         } catch (error) {
             console.error(error);
             message.reply('There was an error trying to execute that command!');
