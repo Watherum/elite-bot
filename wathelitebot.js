@@ -82,7 +82,9 @@ for (const file of commandFiles) {
     // with the key as the command name and the value as the exported module
     discordClient.commands.set(command.name, command);
 }
-console.log(discordClient.commands);
+
+//Useful for debugging. In real use, use !elitehelp
+// console.log(discordClient.commands);
 
 
 //Log in to discord
