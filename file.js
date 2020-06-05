@@ -27,6 +27,7 @@ writer = function() {
      */
     this.logEntireSet = function (set) {
         this.appendDataToFile('set/set_log.txt', set.getSetJson(set));
+        this.writer.appendDataToFile('set/set_log.txt', ',');
     };
 
 
