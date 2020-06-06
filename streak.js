@@ -73,7 +73,9 @@ streak = function() {
         //Remove placeholder that will always be in the logs
         leaderboard.delete("No Current Victor")
         //Sort data
-        leaderboard.sort( (a, b) => a[0] > b[0] );
+        leaderboard.sort( (a, b) => a[1] - b[1] );
+
+        console.log(leaderboard);
 
         //Update the repsonse to be user friendly
         response.push("-----------------------------------------------")
