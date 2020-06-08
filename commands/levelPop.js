@@ -3,7 +3,7 @@ module.exports = {
     description: 'Pops a level from the queue to be played',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         let nextLevelID = marioLevelList.shift();
         let response = nextLevelID + ' is next!';

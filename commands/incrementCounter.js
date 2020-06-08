@@ -3,7 +3,7 @@ module.exports = {
     description: 'Increments the number in the count object',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         count.incrementNumber();
         console.log(`* Executed ic command`);

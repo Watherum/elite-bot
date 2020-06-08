@@ -3,9 +3,9 @@ module.exports = {
     description: 'saves the current stream into an flv file',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
-        textRecog.createStreamFile();
+        frameProcessing.createStreamFile();
         message.channel.send('The stream flv file has been created');
         console.log(`* Executed savestream command`);
     },

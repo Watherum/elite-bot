@@ -3,7 +3,7 @@ module.exports = {
     description: 'Shows the current queue of competitors for the set',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         let response = "";
         for (competitor in singlesSmashList) {

@@ -4,7 +4,7 @@ module.exports = {
     description: 'Calculates the King of the Hill for the Open Arena',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         const chatResponse = streak.calculateKingOfTheHill();
         twitchClient.say(target, "The leaderboard is available in the !discord");

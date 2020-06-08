@@ -3,7 +3,7 @@ module.exports = {
     description: 'Edits the pass variable which chat uses to access the lobby',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         if (args[0] !== null) {
             pass.code = (args[0]);

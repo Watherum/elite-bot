@@ -9,6 +9,7 @@ const setModule = require('./set');
 const streakModule = require('./streak');
 const countModule = require('./count');
 const textRecogModule = require('./text-recognition.js');
+const frameProcessingModule = require('./frame-processing.js');
 const Discord = require('discord.js');
 
 // Define configuration options
@@ -33,6 +34,9 @@ streak.setWins(0);
 
 //Used for text recognition
 let textRecog = textRecogModule.createTextRecognition();
+
+//Used for processing frames of the stream
+let frameProcessing = frameProcessingModule.createFrameProcessing();
 
 //Used for counting. Typically a death counter
 let count = countModule.createCount();
@@ -129,7 +133,7 @@ function discordOnMessageHandler(message) {
             console.log(args);
             discordClient.commands.get(command).execute(discordClient, message, twitchClient, target,
                 set, streak, arena, pass, count,
-                textRecog, singlesSmashList, addSinglesPlayers,
+                textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
                 marioLevelList, addMarioLevels, args);
         } catch (error) {
             console.error(error);

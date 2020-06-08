@@ -3,7 +3,7 @@ module.exports = {
     description: 'Closes the mario level queue for user levels',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         addMarioLevels = true;
         let response = 'Level queue is now closed!';

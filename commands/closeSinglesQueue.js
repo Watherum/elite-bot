@@ -3,7 +3,7 @@ module.exports = {
     description: 'Closes the singles queue so people cant join',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         addSinglesPlayers = false;
         let response = 'Singles queue is now closed';

@@ -3,7 +3,7 @@ module.exports = {
     description: 'Removes a competitor from the queue',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         for (var i = 0; i < singlesSmashList.length; i++) {
             if (singlesSmashList[i] === args[0]) {

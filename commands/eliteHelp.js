@@ -3,7 +3,7 @@ module.exports = {
     description: 'Gives the Streamer and Mods useful info about other commands',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         let generalCommands =
             '-----------------\n' +

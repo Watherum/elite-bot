@@ -3,7 +3,7 @@ module.exports = {
     description: 'Initiates a set with Watherum as Comp. 1 and someone from the queue as Comp. 2',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
 
         console.log('inside command');

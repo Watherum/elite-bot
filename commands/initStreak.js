@@ -3,7 +3,7 @@ module.exports = {
     description: 'Writes the streak victor and their wins to files',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         streak.logStreak(streak);
         streak.setVictor(args[0].trim());

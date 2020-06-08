@@ -3,7 +3,7 @@ module.exports = {
     description: 'Saves the stream and tries to read text from the stream',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         textRecog.createStreamFile();
         textRecog.parseTextFromStream();

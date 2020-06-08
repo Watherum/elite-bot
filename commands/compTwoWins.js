@@ -3,7 +3,7 @@ module.exports = {
     description: 'Updates the win count for comp. 2 in the set',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         let setCompleted = set.incrementCompTwoWins();
         let chatResponse = set.compTwoUserName + " now has " + set.compTwoWins + " win(s)!";

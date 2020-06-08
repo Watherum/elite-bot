@@ -3,7 +3,7 @@ module.exports = {
     description: 'Clears the streaming channel in discord',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
 
         asyncCall();

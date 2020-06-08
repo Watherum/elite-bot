@@ -3,7 +3,7 @@ module.exports = {
     description: 'Open the singles queue for people to join',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         addSinglesPlayers = true;
         let response = 'Singles queue is now open!';

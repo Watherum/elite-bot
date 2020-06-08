@@ -3,7 +3,7 @@ module.exports = {
     description: 'Manually adds a competitor to the list of competitors for a set',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
 
         let chatResponse = 'Ive manually added ' + args[0] + ' to the queue!';

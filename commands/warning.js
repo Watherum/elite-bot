@@ -3,7 +3,7 @@ module.exports = {
     description: 'Sends a warning to the chat about when the stream will end',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
 
         const chatResponse = timeWarning(args[0]);

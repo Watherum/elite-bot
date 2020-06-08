@@ -3,7 +3,7 @@ module.exports = {
     description: 'populates the data in the set for the competitors',
     execute(discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
-            textRecog, singlesSmashList, addSinglesPlayers,
+            textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         let chatResponse = "Malformed commamnd. Ex. !initSet bestofnumber c1name c2name";
             if (args[0] !== null && args[1] !== null && args[2] !== null) {
