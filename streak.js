@@ -47,6 +47,10 @@ streak = function() {
         this.writer.appendDataToFile('streak/streak_log.txt', this.getStreakJson(streak));
     }
 
+    this.clearLogFile = function (streak) {
+        this.writer.writeDataToFile('streak/streak_log.txt', "");
+    }
+
     this.calculateKingOfTheHill = function () {
         //Get data from the streak_log.txt file
         let streakLogTxt = fs.readFileSync(path.resolve('streak','streak_log.txt'), 'utf8');

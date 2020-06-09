@@ -25,10 +25,12 @@ const opts = {
 
 //Used for The set functions
 let set = setModule.createSet();
+set.clearSet(set);
 // console.log(set); //useful for debugging
 
 //used for the streak functions
 let streak = streakModule.createStreak();
+streak.clearLogFile(streak);
 streak.setVictor("No Current Victor");
 streak.setWins(0);
 

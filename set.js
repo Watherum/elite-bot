@@ -13,6 +13,7 @@ compSet = function() {
     this.winner = "";
     this.gameNumber = 0;
     this.setComplete = false;
+    this.firstTo = 0;
 
     this.writer = fileSystem.createWriter();
 
@@ -40,6 +41,15 @@ compSet = function() {
         this.writer.writeDataToFile('set/best_of.txt', this.bestOf);
         this.writer.writeDataToFile('set/win_condition.txt', this.winCondition);
     };
+
+    this.setUpFirstTo = function (firstTo) {
+        this.firstTo = firstTo;
+        this.winCondition = firstTo;
+        this.calculateGameNumber();
+
+        this.writer.writeDataToFile('set/first_to.txt', this.firstTo);
+        this.writer.writeDataToFile('set/win_condition.txt', this.winCondition);
+    }
 
     this.calculateGameNumber = function () {
         this.gameNumber = this.compOneWins + this.compTwoWins + 1;
@@ -165,7 +175,7 @@ compSet = function() {
      * Resets the set back to its default state
      */
     this.clearSet = function (set) {
-        if (set.isSetComplete) {
+        if (set.setComplete) {
             this.writer.logEntireSet(set);
         }
 
@@ -179,6 +189,7 @@ compSet = function() {
         this.winner = "";
         this.gameNumber = 0;
         this.setComplete = false;
+        this.firstTo = 0;
 
         //Reset logs
         this.writer.writeDataToFile('set/competitor_one_user_name.txt', this.compOneUserName);
@@ -189,6 +200,7 @@ compSet = function() {
         this.writer.writeDataToFile('set/win_condition.txt', this.winCondition);
         this.writer.writeDataToFile('set/winner.txt', this.winner);
         this.writer.writeDataToFile('set/game_number.txt', this.gameNumber);
+        this.writer.writeDataToFile('set/first_to.txt', this.firstTo);
     };
 
     this.getC1Name = function () {

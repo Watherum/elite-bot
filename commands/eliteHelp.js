@@ -34,7 +34,8 @@ module.exports = {
             '-------------\n' +
             'SET COMMANDS \n' +
             '-------------\n' +
-            '!initset | Initialize the set files e.g.(!initSet bestOfNumberOfMatches,c1name,c2name)\n' +
+            '!initset | Initialize the set files for a best of e.g.(!initSet bestOfNumberOfMatches,c1name,c2name)\n' +
+            '!initfirst2 | Initialize the set files for a first to e.g.(!initfirst2 firstToNumberOfMatches,c1name,c2name)\n' +
             '!c1w | Increment the wins for the 1st competitor. No arguments to this command\n' +
             '!c2w | Increment the wins for the 2nd competitor. No arguments to this command\n' +
             '!clearset | Clears the set files. No arguments to this command\n\n' +
