@@ -31,7 +31,7 @@ set.clearSet(set);
 //used for the streak functions
 let streak = streakModule.createStreak();
 streak.clearLogFile(streak);
-streak.setVictor("No Current Victor");
+streak.setVictor("No Victor");
 streak.setWins(0);
 
 //Used for text recognition
