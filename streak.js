@@ -75,7 +75,7 @@ streak = function() {
             }
         });
         //Remove placeholder that will always be in the logs
-        leaderboard.delete("No Current Victor")
+        leaderboard.delete("No Victor")
         //Sort data
         leaderboard.sort( (a, b) => a[1] - b[1] );
 
