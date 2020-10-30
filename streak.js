@@ -66,7 +66,7 @@ streak = function() {
             // console.log(arenaStreak);
 
             if (leaderboard.has(arenaStreak.victor)) {
-                if (arenaStreak.consecutiveWins > leaderboard.get(arenaStreak.victor)) {
+                if (parseInt(arenaStreak.consecutiveWins) > parseInt(leaderboard.get(arenaStreak.victor))) {
                     leaderboard.set( arenaStreak.victor, arenaStreak.consecutiveWins );
                 }
             }
@@ -85,6 +85,47 @@ streak = function() {
         response.push("-----------------------------------------------")
         for (const [key, value] of leaderboard.entries()) {
             response.push(key + " had a max streak of " + value);
+        }
+        response.push("-----------------------------------------------")
+        response.push("|         Leaderbaord for " + this.getDate() + "         |")
+        response.push("-----------------------------------------------")
+        response.reverse();
+
+        return response;
+    }
+
+    this.calculateKingOfTheHillWins = function () {
+        //Get data from the streak_log.txt file
+        let streakLogTxt = fs.readFileSync(path.resolve('streak','streak_log.txt'), 'utf8');
+        const data = JSON.parse(this.cleanUpJson(streakLogTxt));
+
+        let leaderboard = new SortableMap();
+        let response = [];
+
+        //Filter thru data and get the highest streak per competitor. Removes duplicates
+        let objectKeysArray = Object.keys(data);
+        objectKeysArray.forEach(function(objKey) {
+            let arenaStreak = data[objKey];
+            // console.log(arenaStreak);
+
+            if (leaderboard.has(arenaStreak.victor)) {
+                leaderboard.set( arenaStreak.victor, parseInt(arenaStreak.consecutiveWins) + parseInt( leaderboard.get(arenaStreak.victor) ) );
+            }
+            else {
+                leaderboard.set( arenaStreak.victor, arenaStreak.consecutiveWins );
+            }
+        });
+        //Remove placeholder that will always be in the logs
+        leaderboard.delete("No Victor")
+        //Sort data
+        leaderboard.sort( (a, b) => a[1] - b[1] );
+
+        console.log(leaderboard);
+
+        //Update the repsonse to be user friendly
+        response.push("-----------------------------------------------")
+        for (const [key, value] of leaderboard.entries()) {
+            response.push(key + " won " + value + " time(s)");
         }
         response.push("-----------------------------------------------")
         response.push("|         Leaderbaord for " + this.getDate() + "         |")

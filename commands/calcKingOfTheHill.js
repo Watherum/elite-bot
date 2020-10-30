@@ -7,10 +7,14 @@ module.exports = {
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
         streak.logStreak(streak);
+
         const chatResponse = streak.calculateKingOfTheHill();
+        discordClient.channels.get(process.env.DISCORD_OPEN_ARENA_LEADERBOARD_STREAK_CHANNEL_ID).send(chatResponse);
+
+        const chatResponse2 = streak.calculateKingOfTheHillWins();
+        discordClient.channels.get(process.env.DISCORD_OPEN_ARENA_LEADERBOARD_WINS_CHANNEL_ID).send(chatResponse2);
+
         twitchClient.say(target, "The leaderboard is available in the !discord");
-        // message.channel.send(chatResponse);
-        discordClient.channels.get(process.env.DISCORD_OPEN_ARENA_LEADERBOARD_CHANNEL_ID).send(chatResponse);
         console.log(`* Executed calckoth command`);
     },
 };
