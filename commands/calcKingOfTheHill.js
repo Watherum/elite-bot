@@ -6,6 +6,7 @@ module.exports = {
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
+        streak.logStreak(streak);
         const chatResponse = streak.calculateKingOfTheHill();
         twitchClient.say(target, "The leaderboard is available in the !discord");
         // message.channel.send(chatResponse);
