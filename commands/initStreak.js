@@ -1,7 +1,7 @@
 module.exports = {
     name: 'initstreak',
     description: 'Writes the streak victor and their wins to files',
-    execute(discordClient, message, twitchClient, target,
+    execute(database, discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {

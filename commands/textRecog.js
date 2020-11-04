@@ -1,7 +1,7 @@
 module.exports = {
     name: 'textrecog',
     description: 'Saves the stream and tries to read text from the stream',
-    execute(discordClient, message, twitchClient, target,
+    execute(database, discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {

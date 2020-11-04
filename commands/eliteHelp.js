@@ -1,7 +1,7 @@
 module.exports = {
     name: 'elitehelp',
     description: 'Gives the Streamer and Mods useful info about other commands',
-    execute(discordClient, message, twitchClient, target,
+    execute(database, discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {

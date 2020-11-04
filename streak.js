@@ -81,7 +81,11 @@ streak = function() {
 
         console.log(leaderboard);
 
-        //Update the repsonse to be user friendly
+        return leaderboard;
+    }
+
+    this.streakLeaderBoardChatResponse = function (leaderboard) {
+        let response = [];
         response.push("-----------------------------------------------")
         for (const [key, value] of leaderboard.entries()) {
             response.push(key + " had a max streak of " + value);
@@ -109,7 +113,8 @@ streak = function() {
             // console.log(arenaStreak);
 
             if (leaderboard.has(arenaStreak.victor)) {
-                leaderboard.set( arenaStreak.victor, parseInt(arenaStreak.consecutiveWins) + parseInt( leaderboard.get(arenaStreak.victor) ) );
+                let previousWins = parseInt( leaderboard.get(arenaStreak.victor) );
+                leaderboard.set( arenaStreak.victor, parseInt(arenaStreak.consecutiveWins) + previousWins );
             }
             else {
                 leaderboard.set( arenaStreak.victor, arenaStreak.consecutiveWins );
@@ -122,7 +127,11 @@ streak = function() {
 
         console.log(leaderboard);
 
-        //Update the repsonse to be user friendly
+        return leaderboard;
+    }
+
+    this.winsLeaderboardChatResponse = function (leaderboard) {
+        let response = [];
         response.push("-----------------------------------------------")
         for (const [key, value] of leaderboard.entries()) {
             response.push(key + " won " + value + " time(s)");

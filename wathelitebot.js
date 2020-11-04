@@ -10,6 +10,7 @@ const streakModule = require('./streak');
 const countModule = require('./count');
 const textRecogModule = require('./text-recognition.js');
 const frameProcessingModule = require('./frame-processing.js');
+const databaseModule = require('./database.js');
 const Discord = require('discord.js');
 
 // Define configuration options
@@ -22,6 +23,8 @@ const opts = {
         process.env.CHANNEL_NAME
     ]
 };
+
+let database = databaseModule.connectToDatabase();
 
 //Used for The set functions
 let set = setModule.createSet();
@@ -133,7 +136,7 @@ function discordOnMessageHandler(message) {
 
         try {
             console.log(args);
-            discordClient.commands.get(command).execute(discordClient, message, twitchClient, target,
+            discordClient.commands.get(command).execute(database, discordClient, message, twitchClient, target,
                 set, streak, arena, pass, count,
                 textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
                 marioLevelList, addMarioLevels, args);

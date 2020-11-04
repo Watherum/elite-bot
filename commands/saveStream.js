@@ -1,7 +1,7 @@
 module.exports = {
     name: 'savestream',
     description: 'saves the current stream into an flv file',
-    execute(discordClient, message, twitchClient, target,
+    execute(database, discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {

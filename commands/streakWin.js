@@ -1,7 +1,7 @@
 module.exports = {
     name: 'sw',
     description: 'Updates the streak win count for the victor',
-    execute(discordClient, message, twitchClient, target,
+    execute(database, discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {

@@ -1,7 +1,7 @@
 module.exports = {
     name: 'opensingles',
     description: 'Open the singles queue for people to join',
-    execute(discordClient, message, twitchClient, target,
+    execute(database, discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {

@@ -1,7 +1,7 @@
 module.exports = {
     name: 'mjoin',
     description: 'Manually adds a competitor to the list of competitors for a set',
-    execute(discordClient, message, twitchClient, target,
+    execute(database, discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {

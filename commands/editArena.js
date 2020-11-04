@@ -1,7 +1,7 @@
 module.exports = {
     name: 'editarena',
     description: 'Edits the arena variable which chat uses to find the arena',
-    execute(discordClient, message, twitchClient, target,
+    execute(database, discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {

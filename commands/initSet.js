@@ -1,7 +1,7 @@
 module.exports = {
     name: 'initset',
     description: 'populates the data in the set for the competitors',
-    execute(discordClient, message, twitchClient, target,
+    execute(database, discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {

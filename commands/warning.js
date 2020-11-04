@@ -1,7 +1,7 @@
 module.exports = {
     name: 'warning',
     description: 'Sends a warning to the chat about when the stream will end',
-    execute(discordClient, message, twitchClient, target,
+    execute(database, discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {

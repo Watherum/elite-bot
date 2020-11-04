@@ -1,7 +1,7 @@
 module.exports = {
     name: 'c1w',
     description: 'Updates the win count for comp. 1 in the set',
-    execute(discordClient, message, twitchClient, target,
+    execute(database, discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {

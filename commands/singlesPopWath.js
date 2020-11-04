@@ -1,7 +1,7 @@
 module.exports = {
     name: 'singlespopwath',
     description: 'Initiates a set with Watherum as Comp. 1 and someone from the queue as Comp. 2',
-    execute(discordClient, message, twitchClient, target,
+    execute(database, discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {

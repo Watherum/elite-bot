@@ -1,7 +1,7 @@
 module.exports = {
     name: 'editpass',
     description: 'Edits the pass variable which chat uses to access the lobby',
-    execute(discordClient, message, twitchClient, target,
+    execute(database, discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {

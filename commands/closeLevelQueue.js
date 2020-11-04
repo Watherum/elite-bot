@@ -1,7 +1,7 @@
 module.exports = {
     name: 'closelevels',
     description: 'Closes the mario level queue for user levels',
-    execute(discordClient, message, twitchClient, target,
+    execute(database, discordClient, message, twitchClient, target,
             set, streak, arena, pass, count,
             textRecog, frameProcessing, singlesSmashList, addSinglesPlayers,
             marioLevelList, addMarioLevels, args) {
