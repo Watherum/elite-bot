@@ -25,7 +25,7 @@ module.exports = {
             '!initstreak | Writes a file used on stream. Sets the name and wins of the player e.g.(!initstreak Watherum,1)\n' +
             '!sw | Increment the wins of the victor. No arguments to this command\n' +
             '!sl | Decrement the wins of the victor. No arguments to this command\n' +
-            '!calckoth | Generates the leaderboard from the streak log and write it to discord' +
+            '!calcstats | Generates the leaderboard from the streak log and write it to discord' +
             '!logstreak | logs the current streak to the streak log' +
             '!clearstreak | clears the streak and the files on stream. No arguments to this command\n\n'
         ;

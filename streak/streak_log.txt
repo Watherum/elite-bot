@@ -1,10 +1,2 @@
 {"victor":"No Victor","consecutiveWins":0,"writer":{}}
-,{"victor":"Watherum","consecutiveWins":"10","writer":{}}
-,{"victor":"Test","consecutiveWins":"3","writer":{}}
-,{"victor":"Test2","consecutiveWins":"1","writer":{}}
-,{"victor":"Test3","consecutiveWins":"5","writer":{}}
-,{"victor":"Test4","consecutiveWins":2,"writer":{}}
-,{"victor":"Test5","consecutiveWins":7,"writer":{}}
-,{"victor":"No Victor","consecutiveWins":0,"writer":{}}
-,{"victor":"No Victor","consecutiveWins":0,"writer":{}}
 ,
