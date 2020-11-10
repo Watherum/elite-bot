@@ -67,7 +67,7 @@ database = function() {
         let data = await this.pool
             .query('SELECT id from elitebot.stats.leaderboard_dates where datetime ilike $1;', [this.getDate()])
             .catch(err => console.error('Error executing query', err.stack));
-        if (data === undefined) {
+        if (data.rows[0] === undefined) {
             data = await this.insertLeaderBoardDate();
             return data;
         }

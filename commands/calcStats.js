@@ -18,11 +18,11 @@ module.exports = {
         const winsResponse = streak.winsLeaderboardChatResponse(winsLeaderboard);
         discordClient.channels.get(process.env.DISCORD_OPEN_ARENA_LEADERBOARD_WINS_CHANNEL_ID).send(winsResponse);
 
-        //Save leaderboards to database
-        database.handleLeaderBoardRecords(streakLeaderboard, winsLeaderboard);
 
         //Update season rankings in the database and print them to discord
         (async () => {
+            //Save leaderboards to database
+            await database.handleLeaderBoardRecords(streakLeaderboard, winsLeaderboard);
             if (process.env.SEASON_ENABLED.toLowerCase() === "true") {
                 await database.updateSeasonRecords(streakLeaderboard, winsLeaderboard);
                 let seasonChart = await database.getSeasonRecordChart();

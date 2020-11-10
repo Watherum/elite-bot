@@ -8,7 +8,7 @@ writer = function() {
      */
 
     this.writeDataToFile = function (fileName , data) {
-        fs.writeFile(fileName, data, (err) => {
+        fs.writeFile(fileName, data + "", (err) => {
             // In case of a error throw err.
             if (err) throw err;
         })
