@@ -45,6 +45,8 @@ streak = function() {
 
     this.logStreak = function(streak) {
         this.writer.appendDataToFile('streak/streak_log.txt', this.getStreakJson(streak));
+        streak.setVictor("No Victor");
+        streak.setWins(0);
     }
 
     this.clearLogFile = function (streak) {
