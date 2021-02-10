@@ -180,7 +180,7 @@ function twitchOnMessageHandler(target, context, msg, self) {
         if (commandInput === '!help') {
             let help = 'Commands are : \n' +
                 '!arena | Get the ArenaID\n' +
-                '!join | Join the singles set queue, get the arenaID and passcode\n' +
+                '!elitejoin | Join the singles set queue, get the arenaID and passcode\n' +
                 '!showqueue | See the status of the singles set queue\n' +
                 '!add | add a level to the Mario Maker level list \n' +
                 '!levelqueue | see the status of the Mario Maker level queue\n'
@@ -199,7 +199,7 @@ function twitchOnMessageHandler(target, context, msg, self) {
             console.log(`* Executed ${commandInput} command`);
         }
 
-        if (commandInput === '!join') {
+        if (commandInput === '!elitejoin') {
 
             const userWhoIsJoining = context.username;
             let chatResponse = 'Ive added you to the queue ' + userWhoIsJoining + '! The arenaID is ' +
