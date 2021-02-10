@@ -97,7 +97,8 @@ database = function() {
         //Key is the competitors name and the value is either the streak or total wins
         for (const [key, value] of streakLeaderboard.entries()) {
             let competitor = await this.getOrCreateCompetitor(key);
-            let newPoints = (parseInt( value ) * 2 ) + parseInt( winsLeaderboard.get(key));
+            let newPoints = ( parseInt(value) * parseInt(process.env.STREAK_MODIFIER) )
+                +  ( parseInt(winsLeaderboard.get(key) ) * parseInt(process.env.WIN_MODIFIER) );
             let currentSeasonRecord = await this.getCompetitorSeasonRecord(competitor.id);
             if (currentSeasonRecord === undefined) {
                 //Insert season record
